@@ -1,0 +1,44 @@
+@import "tailwindcss";
+/* @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); */
+
+/* @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"); */
+
+@layer base {
+  ul,
+  ol {
+    list-style: revert;
+  }
+
+  li {
+    margin-left: 3rem;
+  }
+}
+
+@theme {
+  --color-mine-shaft-50: #f6f6f6;
+  --color-mine-shaft-100: #e7e7e7;
+  --color-mine-shaft-200: #d1d1d1;
+  --color-mine-shaft-300: #b0b0b0;
+  --color-mine-shaft-400: #888888;
+  --color-mine-shaft-500: #6d6d6d;
+  --color-mine-shaft-600: #5d5d5d;
+  --color-mine-shaft-700: #4f4f4f;
+  --color-mine-shaft-800: #454545;
+  --color-mine-shaft-900: #3d3d3d;
+  --color-mine-shaft-950: #2d2d2d;
+
+  --color-caribbean-green-50: #eafff7;
+  --color-caribbean-green-100: #cdfee9;
+  --color-caribbean-green-200: #a0fad8;
+  --color-caribbean-green-300: #63f2c5;
+  --color-caribbean-green-400: #25e2ac;
+  --color-caribbean-green-500: #00cc99;
+  --color-caribbean-green-600: #00a47b;
+  --color-caribbean-green-700: #008367;
+  --color-caribbean-green-800: #006752;
+  --color-caribbean-green-900: #005545;
+  --color-caribbean-green-950: #003028;
+
+
+
+}

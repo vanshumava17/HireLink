@@ -1,0 +1,43 @@
+import { ActionIcon } from "@mantine/core";
+import React from "react";
+import { FaTrash, FaTrashAlt } from "react-icons/fa";
+
+const CertificationCard = (props) => {
+  console.log(props);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2 justify-between">
+        <div className="flex items-center gap-4">
+          <div className="p-2 bg-mine-shaft-700 rounded-md">
+            <img
+              src={`/Icons/${props.issuer}.png`}
+              alt="image"
+              className="h-7"
+            />
+          </div>
+          <div className="text-mine-shaft-300">
+            <h5 className="font-semibold text-mine-shaft-200">{props.name}</h5>
+            <p className="text-sm">{props.issuer}</p>
+          </div>
+        </div>
+        <div className="ml-auto flex items-center gap-2">
+          <div className="flex flex-col items-end">
+            <p className="text-sm text-mine-shaft-300">{props.issueDate}</p>
+            <p className="text-sm text-mine-shaft-300">
+              ID - {props.certificationId}
+            </p>
+          </div>
+
+          {props.edit && (
+            <ActionIcon variant="subtle" size="lg" color="red.4">
+              <FaTrashAlt className="h-3/5 w-3/5" />
+            </ActionIcon>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CertificationCard;
