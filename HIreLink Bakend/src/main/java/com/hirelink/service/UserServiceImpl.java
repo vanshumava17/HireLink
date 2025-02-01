@@ -19,6 +19,7 @@ import com.hirelink.entity.User;
 import com.hirelink.exception.HireLinkException;
 import com.hirelink.repository.OTPRepository;
 import com.hirelink.repository.UserRepository;
+import com.hirelink.service.interfaces.ProfileService;
 import com.hirelink.service.interfaces.UserService;
 import com.hirelink.utility.Data;
 import com.hirelink.utility.Utilities;
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private OTPRepository otpRepository;
+
+	@Autowired
+	private ProfileService profileService;
 	
 	@Override
 	public UserDTO registerUser(UserDTO userDTO) throws HireLinkException {
@@ -46,6 +50,7 @@ public class UserServiceImpl implements UserService{
 		if(optional.isPresent()) throw new HireLinkException("USER_FOUND");
 		userDTO.setId(Utilities.getNextSequence("users"));
 		userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		userDTO.setProfileId(profileService.createProfile(userDTO.getEmail()));
 		User user = userDTO.toEntity();
 		user = userRepository.save(user);
 		return user.toDTO();

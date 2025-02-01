@@ -734,7 +734,7 @@ export const profile = [
     name: "Vansh Umava",
     role: "Software Engineer",
     company: "Google",
-    location: "Bhopal, India",
+    location: "Banglore, India",
     about:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. In non eius labore sed quas velit reprehenderit repellat ipsam dicta et ratione alias magni, quisquam magnam rerum quidem. Repellendus esse amet soluta, neque magnam accusamus consectetur numquam inventore quasi ex laudantium. Laborum, beatae dicta molestiae veniam deleniti eos labore impedit asperiores.",
     skills: [
@@ -750,9 +750,9 @@ export const profile = [
     ],
     experience: [
       {
-        title: "SoftWare Engineer III",
+        title: "SoftWare Engineer I",
         company: "Google",
-        location: "Bhopal, India",
+        location: "Banglore, India",
         startDate: "April 2022",
         endDate: "May 2024",
         description: "",
