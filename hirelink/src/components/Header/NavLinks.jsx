@@ -9,7 +9,7 @@ const NavLinks = () => {
     // { name: "About Us", url: "/about" },
     { name: "Posted Job", url: "/company-posted-job" },
     { name: "Job History", url: "/job-history" },
-    { name: "Sign Up", url: "/signup" },
+    // { name: "Sign Up", url: "/signup" },
   ];
 
   const location = useLocation();

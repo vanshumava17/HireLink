@@ -1,4 +1,9 @@
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import {
+  Button,
+  LoadingOverlay,
+  PasswordInput,
+  TextInput,
+} from "@mantine/core";
 import React from "react";
 import { GoLock } from "react-icons/go";
 import { MdOutlineEmail } from "react-icons/md";
@@ -12,12 +17,16 @@ import { useNavigate } from "react-router";
 import { loginValidation } from "../../services/FormValidation";
 import { useDisclosure } from "@mantine/hooks";
 import ResetPassword from "./ResetPassword";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../slices/UserSlice";
 const form = {
   email: "",
   password: "",
 };
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const [data, setData] = useState(form);
   const [formError, setFormError] = useState(form);
   const navigate = useNavigate();
@@ -37,6 +46,7 @@ const Login = () => {
     }
     setFormError(newFormError);
     if (valid) {
+      setLoading(true);
       loginUser(data)
         .then((res) => {
           console.log(res);
@@ -50,10 +60,13 @@ const Login = () => {
             className: "!border-green-500",
           });
           setTimeout(() => {
+            setLoading(false);
+            dispatch(setUser(res));
             navigate("/");
           }, 2000);
         })
         .catch((err) => {
+          setLoading(false);
           console.log(err);
           notifications.show({
             title: "Login Failed",
@@ -73,6 +86,12 @@ const Login = () => {
 
   return (
     <>
+      <LoadingOverlay
+        visible={loading}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "caribbeanGreen.4", type: "bars" }}
+      />
       <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
         <h4 className="font-semibold text-3xl text-mine-shaft-200">
           LogIn Account
@@ -102,7 +121,7 @@ const Login = () => {
           size="md"
         />
 
-        <Button onClick={handleSubmit} variant="filled">
+        <Button onClick={handleSubmit} variant="filled" loading={loading}>
           Log In
         </Button>
 

@@ -9,10 +9,17 @@ import { BsFillMoonStarsFill } from "react-icons/bs";
 import { TbSun } from "react-icons/tb";
 import { CiLogout } from "react-icons/ci";
 import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../../slices/UserSlice";
 
 const ProfileMenu = () => {
+  const dispatch = useDispatch();
+  const user= useSelector((state)=>state.user);
   const [checked, setChecked] = useState(false);
   const [opened, setOpened] = useState(false);
+  const handleLogout = () =>{
+    dispatch(removeUser());
+  }
   return (
     <Menu
       shadow="md"
@@ -23,7 +30,9 @@ const ProfileMenu = () => {
     >
       <Menu.Target>
         <div className="flex items-center gap-3">
-          <p>Prashant</p>
+          <p>{
+              user.name.substring(0,user.name.indexOf(" "))
+            }</p>
           <Avatar
             src="avatar.webp"
             alt="it's me"
@@ -61,6 +70,7 @@ const ProfileMenu = () => {
         <Menu.Divider />
 
         <Menu.Item
+          onClick={handleLogout}
           leftSection={<CiLogout size={18} />}
           className="!text-red-500 !font-semibold"
         >

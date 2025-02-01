@@ -1,13 +1,15 @@
-import { Avatar, Indicator } from "@mantine/core";
+import { Avatar, Button, Indicator, useSafeMantineTheme } from "@mantine/core";
 import React from "react";
 import { TbHexagonLetterH } from "react-icons/tb";
 import { IoNotifications, IoSettingsOutline } from "react-icons/io5";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router";
 import ProfileMenu from "./ProfileMenu";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const location = useLocation();
+  const user = useSelector((state)=>state.user);
   return (
     location.pathname != "/signup" &&
     location.pathname != "/login" && (
@@ -23,10 +25,10 @@ const Header = () => {
         </Link>
         <NavLinks />
         <div className="flex items-center gap-6 text-xl">
-          <ProfileMenu />
-          <div className="bg-mine-shaft-900 p-1.5 rounded-full hover:bg-mine-shaft-700 cursor-pointer">
+          {user?<ProfileMenu />:<Link to="/login" ><Button variant="outline" color="caribbeanGreen.4">Login</Button></Link>}
+          {/* <div className="bg-mine-shaft-900 p-1.5 rounded-full hover:bg-mine-shaft-700 cursor-pointer">
             <IoSettingsOutline />
-          </div>
+          </div> */}
 
           <div className="bg-mine-shaft-900 p-1.5 rounded-full hover:bg-mine-shaft-700 cursor-pointer">
             <Indicator color="caribbeanGreen.4" processing>
