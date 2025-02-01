@@ -1,21 +1,20 @@
 import React from "react";
-import Home from "./pages/Home";
-import { BrowserRouter, Route, Routes } from "react-router";
-import FindJob from "./pages/FindJob";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import FindTalent from "./pages/FindTalent";
-import TalentProfile from "./pages/TalentProfile";
-import PostJobPage from "./pages/PostJobPage";
-import JobDescriptionPage from "./pages/JobDescriptionPage";
-import ApplyJobPage from "./pages/ApplyJobPage";
-import CompanyPage from "./pages/CompanyPage";
-import PostedJobPage from "./pages/PostedJobPage";
-import JobHistoryPage from "./pages/JobHistoryPage";
-import SignUp from "./components/SignUpLogin/SignUp";
-import SignUpPage from "./pages/SignUpPage";
-import ProfilePage from "./pages/ProfilePage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { useSelector } from "react-redux";
+import Home from "./Home";
+import FindJobs from "./FindJob";
+import FindTalent from "./FindTalent";
+import TalentProfile from "./TalentProfile";
+import PostJobPage from "./PostJobPage";
+import JobDescriptionPage from "./JobDescriptionPage";
+import ApplyJobPage from "./ApplyJobPage";
+import CompanyPage from "./CompanyPage";
+import PostedJobPage from "./PostedJobPage";
+import JobHistoryPage from "./JobHistoryPage";
+import SignUpPage from "./SignUpPage";
+import ProfilePage from "./ProfilePage";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 function AppRoutes() {
   const user = useSelector((state) => state.user);
@@ -26,7 +25,7 @@ function AppRoutes() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/find-jobs" element={<FindJob />} />
+          <Route path="/find-jobs" element={<FindJobs />} />
           <Route path="/find-talent" element={<FindTalent />} />
           <Route path="/talent-profile" element={<TalentProfile />} />
           <Route path="/post-job" element={<PostJobPage />} />
