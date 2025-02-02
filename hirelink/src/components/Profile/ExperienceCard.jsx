@@ -2,9 +2,22 @@ import { Button } from "@mantine/core";
 import React, { useState } from "react";
 import ExperienceInput from "./ExperienceInput";
 import { MdEdit } from "react-icons/md";
+import { formatDate } from "../../services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../slices/ProfileSlice";
+import { successNotification } from "../../services/NotificationService";
 
 const ExperienceCard = (props) => {
+  const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const profile = useSelector((state)=>state.profile);
+  const handleDelete=()=>{
+    let exp = [...profile.experiences];
+    exp.splice(props.index,1);
+    let updateProfile = {...profile,experiences:exp};
+    dispatch(changeProfile(updateProfile));
+    successNotification("Success","Experience Deleted Successfully");
+  }
   return !edit ? (
     <>
       <div className="flex flex-col gap-2">
@@ -27,17 +40,13 @@ const ExperienceCard = (props) => {
             </div>
           </div>
           <div className="ml-12">
-            <p className="text-sm text-mine-shaft-300">
-              {props.startDate} - {props.endDate}
+            <p className="text-sm text-mine-shaft-300 ">
+              {formatDate(props.startDate)} -{props.working?"Present" : formatDate(props.endDate) }
             </p>
           </div>
         </div>
-        <div className="text-sm text-mine-shaft-300 text-justify">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis aliquam
-          nam id reprehenderit velit odit, quas delectus totam? Aliquid officiis
-          vero quisquam cupiditate, iste nobis deleniti repudiandae eius quis
-          ipsa at labore magni hic, quia dolor possimus. Mollitia, reprehenderit
-          accusamus.
+        <div className="text-sm text-mine-shaft-300 text-justify" >
+          {props.description}
         </div>
 
         {props.edit && (
@@ -51,7 +60,7 @@ const ExperienceCard = (props) => {
               Edit
             </Button>
 
-            <Button color="red.4" variant="light">
+            <Button color="red.4" variant="light" onClick={handleDelete}>
               Delete
             </Button>
           </div>
@@ -59,7 +68,7 @@ const ExperienceCard = (props) => {
       </div>
     </>
   ) : (
-    <ExperienceInput setEdit={setEdit} />
+    <ExperienceInput {...props} setEdit={setEdit} />
   );
 };
 

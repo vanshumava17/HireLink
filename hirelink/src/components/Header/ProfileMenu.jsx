@@ -8,17 +8,20 @@ import { FiSun } from "react-icons/fi";
 import { BsFillMoonStarsFill } from "react-icons/bs";
 import { TbSun } from "react-icons/tb";
 import { CiLogout } from "react-icons/ci";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../../slices/UserSlice";
 
 const ProfileMenu = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user= useSelector((state)=>state.user);
+  const profile = useSelector((state)=>state.profile);
   const [checked, setChecked] = useState(false);
   const [opened, setOpened] = useState(false);
   const handleLogout = () =>{
     dispatch(removeUser());
+    navigate("/");
   }
   return (
     <Menu
@@ -34,7 +37,7 @@ const ProfileMenu = () => {
               user.name.substring(0,user.name.indexOf(" "))
             }</p>
           <Avatar
-            src="avatar.webp"
+          src={profile.picture?`data:image/jpeg;base64,${profile.picture}`:"avatar.webp"}
             alt="it's me"
             className="cursor-pointer hover:opacity-70"
           />

@@ -1,67 +1,93 @@
-import {
-  ActionIcon,
-  Button,
-  Divider,
-  TagsInput,
-  Textarea,
-} from "@mantine/core";
-import React, { useState } from "react";
-import { BiBriefcase } from "react-icons/bi";
-import { IoLocationSharp, IoSaveSharp } from "react-icons/io5";
-import ExperienceCard from "./ExperienceCard";
-import CertificationCard from "./CertificationCard";
-import { FaEdit, FaPlus, FaRegEdit } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import SelectInput from "./SelectInput";
-import { fields } from "../../data/Profile";
-import { FiPlus } from "react-icons/fi";
-import ExperienceInput from "./ExperienceInput";
-import CertificationInput from "./CertificationInput";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Info from "./Info";
+import { getProfile } from "../../services/ProfileService";
+import { changeProfile, setProfile } from "../../slices/ProfileSlice";
+import About from "./About";
+import Skills from "./Skills";
+import Experience from "./Experience";
+import Certificate from "./Certificate";
+import { Avatar, Divider, FileInput } from "@mantine/core";
+import { useHover } from '@mantine/hooks';
+import { Button, Overlay, AspectRatio } from '@mantine/core';
+import { FaEdit } from "react-icons/fa";
+import { successNotification } from "../../services/NotificationService";
 
 const Profile = (props) => {
+  const dispatch = useDispatch();
   const [edit, setEdit] = useState([false, false, false, false, false]);
-  const [about, setAbout] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. In non eius labore sed quas velit reprehenderit repellat ipsam dicta et ratione alias magni, quisquam magnam rerum quidem. Repellendus esse amet soluta, neque magnam accusamus consectetur numquam inventore quasi ex laudantium. Laborum, beatae dicta molestiae veniam deleniti eos labore impedit asperiores."
-  );
-  const [skillsValue, setSkillsValue] = useState([
-    "React",
-    "SpringBoot",
-    "MongoDB",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "Python",
-    "Java",
-    "SQL",
-  ]);
-  const [addExperience, setAddExperience] = useState(false);
-  const [addCertificate, setAddCertificate] = useState(false);
-
   const item = props[0];
 
-  const select = fields;
+  const user = useSelector((state) => state.user);
+  const profile = useSelector((state) => state.profile);
 
-  const handleEdit = (index) => {
-    const newEdit = [...edit];
-    newEdit[index] = !newEdit[index];
-    setEdit(newEdit);
-  };
+  useEffect(() => {
+    getProfile(user.id)
+      .then((data) => {
+        console.log(profile);
+        console.log(JSON.stringify(profile) )
+        dispatch(setProfile(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-  return (
-    <div className="w-4/5 mx-auto my-5">
+  // const handleEdit = (index) => {
+  //   const newEdit = [...edit];
+  //   newEdit[index] = !newEdit[index];
+  //   setEdit(newEdit);
+  // };
+
+  const { hovered, ref } = useHover();
+  const handleFileChange = async (image)=>{
+    let picture = await getBase64(image);
+    let updateProfile={...profile,picture:picture.split(',')[1]};
+    dispatch(changeProfile(updateProfile));
+    successNotification("Success", "Profile Picture Updated Successfully");
+  }
+
+  const getBase64=(file)=>{
+    return new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload=()=>resolve(reader.result);
+      reader.onerror=error=>reject(error);
+    })
+  }
+
+ return (
+    <div className="w-4/5 mx-auto ">
+      <div>
       <div className="relative">
         <img
           src="/Profile/banner.png"
           alt=""
           className="rounded-t-2xl h-44 w-full"
         />
-        <img
-          src="avatar.webp"
+        <div ref={ref} className="absolute flex items-center justify-center -bottom-1/4 left-3">
+        <Avatar 
+          src={profile.picture?`data:image/jpeg;base64,${profile.picture}`:"avatar.webp"}
           alt=""
-          className="rounded-full h-40 w-40 -bottom-1/5 absolute left-3 border-mine-shaft-950 border-8"
+          className="rounded-full !h-48 !w-48  border-mine-shaft-950 border-8"
         />
+        {hovered && <Overlay
+        className="!rounded-full"
+        color="#000" backgroundOpacity={0.85} />}
+        {hovered && <FaEdit className="absolute  z-[300] w-12 h-12"/>}
+        {
+          hovered && 
+          <FileInput 
+        className="absolute w-full z-[301] [&_*]:!rounded-full [&_*]:!h-full !h-full  [&_div]:text-transparent"  
+          accept="images/png,images/jpeg"
+          variant="transparent"
+          onChange={handleFileChange}
+          />
+          
+        }
+        </div>
       </div>
-      <div className="px-3 mt-10 flex flex-col gap-1">
+      {/* <div className="px-3 mt-10 flex flex-col gap-1">
         <div className="text-3xl font-semibold flex justify-between">
           <p>{item?.name}</p>
           <ActionIcon
@@ -99,171 +125,23 @@ const Profile = (props) => {
             </div>
           </>
         )}
-      </div>
+      </div> */}
+      <Info item={item} />
 
       <Divider size="sm" my="lg" />
 
-      <div className="px-3">
-        <div className="text-2xl font-semibold mb-3 flex justify-between">
-          <h4>About</h4>
-          <ActionIcon
-            variant="subtle"
-            size="xl"
-            color="caribbeanGreen.4"
-            onClick={() => handleEdit(1)}
-          >
-            {edit[1] ? (
-              <IoSaveSharp className="h-3/5 w-3/5" />
-            ) : (
-              <MdEdit className="h-3/5 w-3/5" />
-            )}
-          </ActionIcon>
-        </div>
-
-        {edit[1] ? (
-          <Textarea
-            value={about}
-            onChange={(event) => setAbout(event.currentTarget.value)}
-            autosize
-            minRows={4}
-            placeholder="About your self"
-          />
-        ) : (
-          <p className="text-md text-mine-shaft-200 text-justify">
-            {item?.about}
-          </p>
-        )}
-      </div>
+      <About />
 
       <Divider size="sm" my="lg" />
 
-      <div className="px-3">
-        <div className="text-2xl font-semibold mb-3 flex justify-between">
-          <h4>Skills</h4>
-          <ActionIcon
-            variant="subtle"
-            size="xl"
-            color="caribbeanGreen.4"
-            onClick={() => handleEdit(2)}
-          >
-            {edit[2] ? (
-              <IoSaveSharp className="h-3/5 w-3/5" />
-            ) : (
-              <MdEdit className="h-3/5 w-3/5" />
-            )}
-          </ActionIcon>
-        </div>
-
-        {edit[2] ? (
-          <TagsInput
-            placeholder="Enter tag"
-            splitChars={[",", "|"]}
-            value={skillsValue}
-            onChange={setSkillsValue}
-            clearable
-            className="[&_input]:!font-semibold [&_span]:!font-semibold"
-          />
-        ) : (
-          <div className="flex flex-wrap gap-2">
-            {item?.skills.map((skill, index) => {
-              return (
-                <p
-                  className="bg-mine-shaft-800 rounded-3xl text-caribbean-green-400 px-3 py-1 font-medium"
-                  key={index}
-                >
-                  {skill}
-                </p>
-              );
-            })}
-          </div>
-        )}
-      </div>
+      <Skills />
 
       <Divider size="sm" my="lg" />
-      <div className="px-3 flex flex-col">
-        <div className="text-2xl font-semibold mb-1 flex justify-between">
-          Experience
-          {edit[3] ? (
-            <div className="flex gap-2">
-              <ActionIcon
-                variant="subtle"
-                size="xl"
-                color="caribbeanGreen.4"
-                onClick={() => setAddExperience(true)}
-              >
-                <FiPlus className="h-3/5 w-3/5" />
-              </ActionIcon>
 
-              <ActionIcon
-                variant="subtle"
-                size="xl"
-                color="caribbeanGreen.4"
-                onClick={() => handleEdit(3)}
-              >
-                <IoSaveSharp className="h-3/5 w-3/5" />
-              </ActionIcon>
-            </div>
-          ) : (
-            <ActionIcon
-              variant="subtle"
-              size="xl"
-              color="caribbeanGreen.4"
-              onClick={() => handleEdit(3)}
-            >
-              <MdEdit className="h-3/5 w-3/5" />
-            </ActionIcon>
-          )}
-        </div>
-        {item?.experience.map((expCard, index) => {
-          return <ExperienceCard key={index} {...expCard} edit={edit[3]} />;
-        })}
-
-        {addExperience ? (
-          <ExperienceInput setEdit={setAddExperience} add />
-        ) : (
-          <></>
-        )}
-      </div>
+      <Experience />
 
       <Divider size="sm" my="lg" />
-      <div className="px-3 flex flex-col">
-        <div className="text-2xl font-semibold mb-1 flex justify-between">
-          Certifications
-          {edit[4] ? (
-            <div className="flex gap-2">
-              <ActionIcon
-                variant="subtle"
-                size="xl"
-                color="caribbeanGreen.4"
-                onClick={() => setAddCertificate(true)}
-              >
-                <FiPlus className="h-3/5 w-3/5" />
-              </ActionIcon>
-
-              <ActionIcon
-                variant="subtle"
-                size="xl"
-                color="caribbeanGreen.4"
-                onClick={() => handleEdit(4)}
-              >
-                <IoSaveSharp className="h-3/5 w-3/5" />
-              </ActionIcon>
-            </div>
-          ) : (
-            <ActionIcon
-              variant="subtle"
-              size="xl"
-              color="caribbeanGreen.4"
-              onClick={() => handleEdit(4)}
-            >
-              <MdEdit className="h-3/5 w-3/5" />
-            </ActionIcon>
-          )}
-        </div>
-        {item?.certifications.map((certCard, index) => {
-          return <CertificationCard key={index} {...certCard} edit={edit[4]} />;
-        })}
-        {addCertificate && <CertificationInput setEdit={setAddCertificate} />}
+      <Certificate/>
       </div>
     </div>
   );

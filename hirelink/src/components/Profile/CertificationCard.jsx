@@ -1,10 +1,22 @@
 import { ActionIcon } from "@mantine/core";
 import React from "react";
 import { FaTrash, FaTrashAlt } from "react-icons/fa";
+import { formatDate } from "../../services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../slices/ProfileSlice";
+import { successNotification } from "../../services/NotificationService";
 
 const CertificationCard = (props) => {
-  console.log(props);
-
+  // console.log(props);
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.profile);
+  const handleDelete = () => {
+    let certis = [...profile.certifications];
+    certis.splice(props.index, 1);
+    let updateProfile = { ...profile, certifications: certis };
+    dispatch(changeProfile(updateProfile));
+    successNotification("Success", "Certificate Deleted Successfully");
+  };
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2 justify-between">
@@ -23,14 +35,21 @@ const CertificationCard = (props) => {
         </div>
         <div className="ml-auto flex items-center gap-2">
           <div className="flex flex-col items-end">
-            <p className="text-sm text-mine-shaft-300">{props.issueDate}</p>
             <p className="text-sm text-mine-shaft-300">
-              ID - {props.certificationId}
+              {formatDate(props.issueDate)}
+            </p>
+            <p className="text-sm text-mine-shaft-300">
+              ID - {props.certificateId}
             </p>
           </div>
 
           {props.edit && (
-            <ActionIcon variant="subtle" size="lg" color="red.4">
+            <ActionIcon
+              onClick={handleDelete}
+              variant="subtle"
+              size="lg"
+              color="red.4"
+            >
               <FaTrashAlt className="h-3/5 w-3/5" />
             </ActionIcon>
           )}

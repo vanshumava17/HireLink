@@ -15,7 +15,7 @@ export const fields = [
       "Content Writer",
       "Customer Support",
     ],
-    value: "Software Engineer",
+    value: "Web Developer",
     leftSection: IoBriefcaseOutline,
   },
   {
@@ -39,7 +39,7 @@ export const fields = [
     label: 'Location',
     placeholder: 'Enter Your Location',
     options: ['Delhi', 'Mumbai', 'Pune', 'Indore', 'Bhopal', 'Noida'],
-    value: 'Mumbai',
+    value: '',
     leftSection: MdOutlineLocationOn
   }
 ];

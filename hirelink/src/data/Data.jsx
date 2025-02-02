@@ -732,7 +732,7 @@ export const talents = [
 export const profile = [
   {
     name: "Vansh Umava",
-    role: "Software Engineer",
+    role: "Software ",
     company: "Google",
     location: "Banglore, India",
     about:
@@ -751,7 +751,7 @@ export const profile = [
     experience: [
       {
         title: "SoftWare Engineer I",
-        company: "Google",
+        company: "",
         location: "Banglore, India",
         startDate: "April 2022",
         endDate: "May 2024",
