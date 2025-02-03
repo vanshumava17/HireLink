@@ -21,17 +21,7 @@ const Profile = (props) => {
   const user = useSelector((state) => state.user);
   const profile = useSelector((state) => state.profile);
 
-  useEffect(() => {
-    getProfile(user.id)
-      .then((data) => {
-        console.log(profile);
-        console.log(JSON.stringify(profile) )
-        dispatch(setProfile(data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  
 
   // const handleEdit = (index) => {
   //   const newEdit = [...edit];

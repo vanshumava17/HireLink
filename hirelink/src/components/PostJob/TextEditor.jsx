@@ -13,7 +13,7 @@ import { IoMdColorFilter } from "react-icons/io";
 
 const content = "";
 
-const TextEditor = () => {
+const TextEditor = (props) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -26,7 +26,10 @@ const TextEditor = () => {
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    content,
+    content:props.form.getValues().description,
+    onUpdate({editor}) {
+      props.form.setFieldValue('description', editor.getHTML())
+    }
   });
 
   return (

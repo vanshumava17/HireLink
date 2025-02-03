@@ -1,15 +1,33 @@
 import { Avatar, Button, Indicator, useSafeMantineTheme } from "@mantine/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { TbHexagonLetterH } from "react-icons/tb";
 import { IoNotifications, IoSettingsOutline } from "react-icons/io5";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router";
 import ProfileMenu from "./ProfileMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../services/ProfileService";
+import { setProfile } from "../../slices/ProfileSlice";
 
 const Header = () => {
   const location = useLocation();
   const user = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
+
+  console.log(user);
+  
+  useEffect(() => {
+      getProfile(user.id)
+        .then((data) => {
+          // console.log(profile);
+          // console.log(JSON.stringify(profile) )
+          dispatch(setProfile(data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, []);
+
   return (
     location.pathname != "/signup" &&
     location.pathname != "/login" && (

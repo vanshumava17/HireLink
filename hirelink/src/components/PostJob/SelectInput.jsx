@@ -13,13 +13,15 @@ const SelectInput = (props) => {
 
   useEffect(() => {
     setData(props.options);
+    setValue(props.form.getInputProps(props.name).value)
+    setSearch(props.form.getInputProps(props.name).value)
   }, []);
 
   const exactOptionMatch = data.some((item) => item === search);
   const filteredOptions = exactOptionMatch
     ? data
     : data.filter((item) =>
-        item.toLowerCase().includes(search.toLowerCase().trim())
+        item.toLowerCase().includes(search?.toLowerCase().trim())
       );
 
   const options = filteredOptions.map((item) => (
@@ -36,9 +38,11 @@ const SelectInput = (props) => {
         if (val === "$create") {
           setData((current) => [...current, search]);
           setValue(search);
+          props.form.setFieldValue(props.name,search);
         } else {
           setValue(val);
           setSearch(val);
+          props.form.setFieldValue(props.name,val);
         }
 
         combobox.closeDropdown();
@@ -47,6 +51,7 @@ const SelectInput = (props) => {
       <Combobox.Target>
         <InputBase
           label={props.label}
+          {...props.form.getInputProps(props.name)}
           rightSection={<Combobox.Chevron />}
           value={search}
           onChange={(event) => {
@@ -63,7 +68,7 @@ const SelectInput = (props) => {
           placeholder={props.placeholder}
           rightSectionPointerEvents="none"
           withAsterisk
-          className="font-medium [&_label]:!text-md"
+          // className="font-medium [&_label]:!text-md"
         />
       </Combobox.Target>
 
@@ -71,7 +76,7 @@ const SelectInput = (props) => {
         <Combobox.Options>
           <ScrollArea.Autosize mah={155} type="scroll">
             {options}
-            {!exactOptionMatch && search.trim().length > 0 && (
+            {!exactOptionMatch && search?.trim().length > 0 && (
               <Combobox.Option value="$create">
                 + Create {search}
               </Combobox.Option>
