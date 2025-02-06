@@ -23,11 +23,23 @@ public class ProfileDTO {
     private String location;
     private String about;
     private String picture;
-    private List<String>skills;
-    private List<ExperienceDTO>experiences;
-    private List<CertificationDTO>certifications;
+    private List<String> skills;
+    private List<ExperienceDTO> experiences;
+    private List<CertificationDTO> certifications;
+    private List<Long> savedJobs;
 
-    public Profile toEntity(){
-        return new Profile(this.id, this.email,this.jobTitle,this.company,this.location,this.about,this.picture!=null?Base64.getDecoder().decode(this.picture):null,this.skills,this.experiences,this.certifications);
+    public Profile toEntity() {
+        return new Profile(
+                this.id,
+                this.email,
+                this.jobTitle,
+                this.company,
+                this.location,
+                this.about,
+                this.picture != null ? Base64.getDecoder().decode(this.picture) : null,
+                this.skills,
+                this.experiences,
+                this.certifications,
+                this.savedJobs);
     }
-} 
+}

@@ -14,19 +14,32 @@ const Header = () => {
   const user = useSelector((state)=>state.user);
   const dispatch = useDispatch();
 
-  console.log(user);
+  // console.log(user);
   
+  // useEffect(() => {
+  //     getProfile(user.id)
+  //       .then((data) => {
+  //         // console.log(profile);
+  //         // console.log(JSON.stringify(profile) )
+  //         dispatch(setProfile(data));
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }, []);
+
   useEffect(() => {
+    if (user) {  // Only fetch profile if user is not null
       getProfile(user.id)
         .then((data) => {
-          // console.log(profile);
-          // console.log(JSON.stringify(profile) )
           dispatch(setProfile(data));
         })
         .catch((error) => {
-          console.log(error);
+          console.error("Error fetching profile:", error);
         });
-    }, []);
+    }
+  }, [user]); // Depend on user, so it runs when user state changes
+  
 
   return (
     location.pathname != "/signup" &&

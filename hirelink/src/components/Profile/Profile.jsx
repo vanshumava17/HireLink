@@ -12,6 +12,7 @@ import { useHover } from '@mantine/hooks';
 import { Button, Overlay, AspectRatio } from '@mantine/core';
 import { FaEdit } from "react-icons/fa";
 import { successNotification } from "../../services/NotificationService";
+import { getBase64 } from "../../services/Utilities";
 
 const Profile = (props) => {
   const dispatch = useDispatch();
@@ -37,14 +38,7 @@ const Profile = (props) => {
     successNotification("Success", "Profile Picture Updated Successfully");
   }
 
-  const getBase64=(file)=>{
-    return new Promise((resolve,reject)=>{
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload=()=>resolve(reader.result);
-      reader.onerror=error=>reject(error);
-    })
-  }
+  
 
  return (
     <div className="w-4/5 mx-auto ">

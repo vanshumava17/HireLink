@@ -28,6 +28,7 @@ public class Profile {
     private List<String> skills;
     private List<ExperienceDTO> experiences;
     private List<CertificationDTO> certifications;
+    private List<Long> savedJobs;
 
     public ProfileDTO toDTO() {
         return new ProfileDTO(this.id,
@@ -39,6 +40,7 @@ public class Profile {
                 this.picture != null ? Base64.getEncoder().encodeToString(this.picture) : null,
                 this.skills,
                 this.experiences,
-                this.certifications);
+                this.certifications,
+                this.savedJobs);
     }
 }

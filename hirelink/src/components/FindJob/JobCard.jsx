@@ -1,20 +1,35 @@
-import { Divider, Text } from "@mantine/core";
+import { Button, Divider, Text } from "@mantine/core";
 import React from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaClock } from "react-icons/fa";
 import { Link } from "react-router";
+import { timeAgo } from "../../services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { IoBookmark } from "react-icons/io5";
+import { changeProfile } from "../../slices/ProfileSlice";
 
 const JobCard = (props) => {
-  console.log(props);
-
+  // console.log(props);
+  const profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+  const handleSaveJob = () => {
+    let savedJobs = Array.isArray(profile?.savedJobs) ? [...profile.savedJobs] : [];
+  
+    if (savedJobs.includes(props.id)) {
+      savedJobs = savedJobs.filter((id) => id !== props.id);
+    } else {
+      savedJobs.push(props.id);
+    }
+  
+    let updatedProfile = { ...profile, savedJobs: savedJobs };
+    dispatch(changeProfile(updatedProfile));
+  };
+  
   return (
-    <Link
-      to={"/jobs"}
-      className="bg-mine-shaft-900 p-4 w-80 rounded-lg hover:shadow-[0_0_5px_1px_yellow] !shadow-caribbean-green-400 cursor-pointer min-h-56"
-    >
+    <div className="bg-mine-shaft-900 p-4 w-80 rounded-lg hover:shadow-[0_0_5px_1px_caribbeanGreen.3] !shadow-caribbean-green-400  ">
       <div className="flex items-center gap-2">
         <div className="p-2 bg-mine-shaft-700 rounded-md">
-          <img src={props?.img} alt="" className="h-7" />
+          <img src={`/Icons/${props.company}.png`} alt="" className="h-7" />
         </div>
         <div className="text-mine-shaft-300">
           <h5 className="font-semibold text-mine-shaft-200">
@@ -23,16 +38,31 @@ const JobCard = (props) => {
           {/* <p className="text-sm">
             {props?.company} &#x2022; {props?.applicants} Applicants
           </p> */}
-          <p className="text-sm">
-            {props?.company}&nbsp;
-            &#x2022;
+          <div className="text-sm">
+            <Link
+              className="hover:text-caribbean-green-100 "
+              to={`/company/${props?.company}`}
+            >
+              {props?.company}
+            </Link>
+            &nbsp; &#x2022;
             {props?.applicants != null
               ? ` ${props.applicants.length} Applicants`
               : "No Applicants"}
-          </p>
+          </div>
         </div>
         <div className="ml-auto">
-          <CiBookmark className="text-2xl cursor-pointer" />
+          {profile?.savedJobs?.includes(props.id) ? (
+            <IoBookmark
+              onClick={handleSaveJob}
+              className="text-2xl text-caribbean-green-500 cursor-pointer"
+            />
+          ) : (
+            <CiBookmark
+              onClick={handleSaveJob}
+              className="text-2xl text-caribbean-green-600 cursor-pointer hover:text-caribbean-green-400"
+            />
+          )}
         </div>
       </div>
 
@@ -59,10 +89,15 @@ const JobCard = (props) => {
         <p className="font-bold">₹ {props?.packageOffered} LPA</p>
         <div className="flex items-center gap-1 font-semibold text-mine-shaft-400 text-sm">
           <FaClock className="h-4 w-4 font-bold" stroke={2} />
-          {props?.postedDaysAgo} days ago
+          {timeAgo(props?.postTime)}
         </div>
       </div>
-    </Link>
+      <Link to={`/jobs/${props.id}`}>
+        <Button className="hover:cursor-pointer min-h-5" fullWidth variant="outline" color="caribbeanGreen.4">
+          View
+        </Button>
+      </Link>
+    </div>
   );
 };
 

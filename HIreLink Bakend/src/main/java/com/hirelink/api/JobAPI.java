@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hirelink.dto.ApplicantDTO;
 import com.hirelink.dto.JobDTO;
+import com.hirelink.dto.ResponseDTO;
 import com.hirelink.exception.HireLinkException;
 import com.hirelink.service.interfaces.JobService;
 
@@ -33,7 +35,7 @@ public class JobAPI {
 
     @PostMapping("/post")
     public ResponseEntity<JobDTO> postJob(@RequestBody @Valid JobDTO jobDTO) throws HireLinkException {
-        return new ResponseEntity<>(jobService.postJob(jobDTO),HttpStatus.OK);
+        return new ResponseEntity<>(jobService.postJob(jobDTO),HttpStatus.CREATED);
     }
     
     @GetMapping("/getAll")
@@ -45,5 +47,11 @@ public class JobAPI {
     public ResponseEntity<JobDTO> getJob(@PathVariable Long id) throws HireLinkException{
         return new ResponseEntity<>(jobService.getJob(id),HttpStatus.OK);
     }   
+
+    @PostMapping("/apply/{id}")
+    public ResponseEntity<ResponseDTO> applyJob(@PathVariable Long id,@RequestBody ApplicantDTO applicantDTO) throws HireLinkException {
+        jobService.applyJob(id,applicantDTO);
+        return new ResponseEntity<>(new ResponseDTO("Applied Successfully"),HttpStatus.OK);
+    }
     
 }

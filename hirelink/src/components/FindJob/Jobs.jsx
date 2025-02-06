@@ -10,7 +10,7 @@ const Jobs = () => {
   useEffect(() => {
     getAllJobs()
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setJobList(res);
       })
       .catch((err) => {

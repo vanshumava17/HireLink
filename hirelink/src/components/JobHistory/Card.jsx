@@ -1,30 +1,57 @@
 import { Button, Divider, Text } from "@mantine/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { IoBookmark } from "react-icons/io5";
+import { timeAgo } from "../../services/Utilities";
 import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../slices/ProfileSlice"
+
 
 const Card = (props) => {
+ 
+ const  dispatch = useDispatch();
+  const profile = useSelector((state)=>state.profile);
+
+  const handleSaveJob = () => {
+    let savedJobs = Array.isArray(profile?.savedJobs) ? [...profile.savedJobs] : [];
+  
+    if (savedJobs.includes(props.id)) {
+      savedJobs = savedJobs.filter((id) => id !== props.id);
+    } else {
+      savedJobs.push(props.id);
+    }
+  
+    let updatedProfile = { ...profile, savedJobs: savedJobs };
+    dispatch(changeProfile(updatedProfile));
+  };
+  
   return (
-    <div className="bg-mine-shaft-900 p-4 w-80 rounded-lg hover:shadow-[0_0_5px_1px_yellow] !shadow-caribbean-green-400 cursor-pointer min-h-56">
+    <Link to={`/jobs/${props.id}`} className="bg-mine-shaft-900 p-4 w-80 rounded-lg hover:shadow-[0_0_5px_1px_yellow] !shadow-caribbean-green-400 cursor-pointer min-h-56">
       <div className="flex items-center gap-2">
         <div className="p-2 bg-mine-shaft-700 rounded-md">
-          <img src={props.img} alt="" className="h-7" />
+          <img src={`/Icons/${props?.company}.png`} alt="" className="h-7" />
         </div>
         <div className="text-mine-shaft-300">
           <h5 className="font-semibold text-mine-shaft-200">
             {props.jobTitle}
           </h5>
           <p className="text-sm">
-            {props.company} &#x2022; {props.applicants} Applicants
+            {props.company} &#x2022; {props.applicants ? props.applicants.length : 0  } Applicants
           </p>
         </div>
         <div className="ml-12">
-          {props.saved ? (
-            <IoBookmark className="text-2xl cursor-pointer text-caribbean-green-400" />
+        {profile?.savedJobs?.includes(props.id) ? (
+            <IoBookmark
+              onClick={handleSaveJob}
+              className="text-2xl text-caribbean-green-500 cursor-pointer"
+            />
           ) : (
-            <CiBookmark className="text-2xl cursor-pointer" />
+            <CiBookmark
+              onClick={handleSaveJob}
+              className="text-2xl text-caribbean-green-600 cursor-pointer hover:text-caribbean-green-400"
+            />
           )}
         </div>
       </div>
@@ -49,14 +76,14 @@ const Card = (props) => {
 
       <Divider size="xs" color="mineShaft.3" />
       <div className="flex justify-between items-center my-2">
-        <p className="font-bold">₹ {props.package}</p>
+        <p className="font-bold">₹ {props.packageOffered} LPA</p>
+
         <div className="flex items-center gap-1 font-semibold text-mine-shaft-400 text-sm">
           <FaClock className="h-4 w-4 font-bold" stroke={2} />
-          {props.offered
-            ? `Interviewed ${props.postedDaysAgo} days ago`
-            : `Applied ${props.postedDaysAgo} days ago`}
+          {props.applied || props.interviewing? "Applied " : props.offerd? "Interviewed":"Posted"}
+          {timeAgo(props.postTime)}
         </div>
-      </div>
+       </div>
 
       {(props.offered || props.interviewing) && (
         <Divider size="xs" color="mineShaft.3" />
@@ -88,7 +115,7 @@ const Card = (props) => {
       ) : (
         <></>
       )}
-    </div>
+    </Link>
   );
 };
 
