@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hirelink.dto.ApplicantDTO;
+import com.hirelink.dto.ApplicationDTO;
 import com.hirelink.dto.JobDTO;
 import com.hirelink.dto.ResponseDTO;
 import com.hirelink.exception.HireLinkException;
@@ -52,6 +53,17 @@ public class JobAPI {
     public ResponseEntity<ResponseDTO> applyJob(@PathVariable Long id,@RequestBody ApplicantDTO applicantDTO) throws HireLinkException {
         jobService.applyJob(id,applicantDTO);
         return new ResponseEntity<>(new ResponseDTO("Applied Successfully"),HttpStatus.OK);
+    }
+
+    @GetMapping("/postedBy/{postedBy}")
+    public ResponseEntity<List<JobDTO>> getJobsPostedBy(@PathVariable Long postedBy) throws HireLinkException{
+        return new ResponseEntity<>(jobService.getJobsPostedBy(postedBy),HttpStatus.OK);
+    }
+
+    @PostMapping("/changeApplicationStatus")
+    public ResponseEntity<ResponseDTO> changeApplicationStatus(@RequestBody ApplicationDTO applicationDTO) throws HireLinkException {
+        jobService.changeApplicationStatus(applicationDTO);
+        return new ResponseEntity<>(new ResponseDTO("Application Status Changed Successfully"),HttpStatus.OK);
     }
     
 }

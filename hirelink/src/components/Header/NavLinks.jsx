@@ -7,7 +7,7 @@ const NavLinks = () => {
     { name: "Find Talent", url: "/find-talent" },
     { name: "Post Jobs", url: "/post-job" },
     // { name: "About Us", url: "/about" },
-    { name: "Posted Job", url: "/company-posted-job" },
+    { name: "Posted Job", url: "/company-posted-job/1" },
     { name: "Job History", url: "/job-history" },
     // { name: "Sign Up", url: "/signup" },
   ];

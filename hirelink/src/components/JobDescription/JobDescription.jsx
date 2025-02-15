@@ -70,9 +70,14 @@ const JobDescription = (props) => {
                 </Button>
               </Link>
             }
-            { applied &&
+            { !props.edit && applied &&
               <Button color="green.8" variant="light">
                 Applied
+              </Button>
+            }
+            { props.edit && applied &&
+              <Button color="caribbeanGreen.4" variant="outline">
+                Edit
               </Button>
             }
             {props.edit ? (

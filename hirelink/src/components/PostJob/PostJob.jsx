@@ -15,11 +15,13 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { postJob } from "../../services/JobService";
 import { successNotification , errorNotification } from "../../services/NotificationService";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux"
 
 
 const PostJob = () => {
   const select = fields;
   const navigate = useNavigate();
+  const user = useSelector((state)=>state.user);
 
   const form = useForm({
     mode: "controlled",
@@ -51,10 +53,26 @@ const PostJob = () => {
   const handlePost = ()=>{
     form.validate();
     if(!form.isValid()) return ;
-    postJob(form.getValues())
+    postJob({...form.getValues(),postedBy:user.id, jobStatus:"ACTIVE"})
     .then((res)=>{
         successNotification("Success", "Job Posted Successfully");  
-        navigate("/company-posted-job");
+        navigate(`/company-posted-job/${res.id}`);
+    })
+    .catch((err)=>{
+      console.log(err);
+      // errorNotification("Error" ,err.response.data.errorMessage);
+      errorNotification("Error" ,"something went wrong");
+
+    })
+  }
+
+  const handleDraft = ()=>{
+form.validate();
+    if(!form.isValid()) return ;
+    postJob({...form.getValues(),postedBy:user.id, jobStatus:"DRAFT"})
+    .then((res)=>{
+        successNotification("Success", "Job Drafted Successfully");  
+        navigate(`/company-posted-job/${res.id}`);
     })
     .catch((err)=>{
       console.log(err);
@@ -125,7 +143,7 @@ const PostJob = () => {
           <Button variant="light" color="caribbeanGreen.4" onClick={handlePost}>
             Publish Job
           </Button>
-          <Button variant="outline" color="caribbeanGreen.4">
+          <Button variant="outline" color="caribbeanGreen.4" onClick={handleDraft}>
             Save as Draft
           </Button>
         </div>

@@ -27,12 +27,12 @@ function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/find-jobs" element={<FindJobs />} />
           <Route path="/find-talent" element={<FindTalent />} />
-          <Route path="/talent-profile" element={<TalentProfile />} />
+          <Route path="/talent-profile/:id" element={<TalentProfile />} />
           <Route path="/post-job" element={<PostJobPage />} />
           <Route path="/jobs/:id" element={<JobDescriptionPage />} />
           <Route path="/apply-job/:id" element={<ApplyJobPage />} />
           <Route path="/company/:name" element={<CompanyPage />} />
-          <Route path="/company-posted-job" element={<PostedJobPage />} />
+          <Route path="/company-posted-job/:id" element={<PostedJobPage />} />
           <Route path="/job-history" element={<JobHistoryPage />} />
           <Route
             path="/signup"
@@ -43,6 +43,7 @@ function AppRoutes() {
             element={user ? <Navigate to={"/"} /> : <SignUpPage />}
           />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="*"  element={<Home/>} />
         </Routes>
         <Footer />
       </div>

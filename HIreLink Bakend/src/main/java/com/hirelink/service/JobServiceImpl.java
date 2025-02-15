@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hirelink.dto.ApplicantDTO;
+import com.hirelink.dto.ApplicationDTO;
 import com.hirelink.dto.JobDTO;
 import com.hirelink.entity.Applicant;
 import com.hirelink.entity.Job;
@@ -50,6 +51,30 @@ public class JobServiceImpl implements JobService {
             throw new HireLinkException("JOB_APPLIED_ALREADY");
         applicantDTO.setApplicationStatus(ApplicationStatus.APPLIED);
         applicants.add(applicantDTO.toEntity());
+        job.setApplicants(applicants);
+        jobRepository.save(job);
+    }
+
+    @Override
+    public List<JobDTO> getJobsPostedBy(Long postedBy) throws HireLinkException {
+        return jobRepository.findByPostedBy(postedBy)
+                .stream().map(k -> k.toDTO()).toList();
+    }
+
+    @Override
+    public void changeApplicationStatus(ApplicationDTO applicationDTO) throws HireLinkException {
+        Job job = jobRepository.findById(applicationDTO.getId()).orElseThrow(()->new HireLinkException("JOB_NOT_FOUND"));
+        List<Applicant> applicants = job.getApplicants().stream().map((x)->{
+            if(applicationDTO.getApplicantId() == x.getApplicantId()){
+                x.setApplicationStatus(applicationDTO.getApplicationStatus());
+                if(applicationDTO.getApplicationStatus().equals((ApplicationStatus.INTERVIEWING))){
+                    x.setInterviewTime(applicationDTO.getInterviewTime());
+                }
+            }
+
+            return x;
+        }).toList();
+
         job.setApplicants(applicants);
         jobRepository.save(job);
     }

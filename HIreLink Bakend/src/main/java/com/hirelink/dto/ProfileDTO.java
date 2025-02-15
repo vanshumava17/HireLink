@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Document(collection = "profiles")
 public class ProfileDTO {
     private Long id;
+    private String name;
     private String email;
     private String jobTitle;
     private String company;
@@ -31,6 +32,7 @@ public class ProfileDTO {
     public Profile toEntity() {
         return new Profile(
                 this.id,
+                this.name,
                 this.email,
                 this.jobTitle,
                 this.company,

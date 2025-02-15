@@ -1,5 +1,5 @@
 package com.hirelink.utility;
 
 public enum JobStatus {
-    OPEN, CLOSED, DRAFT 
+    ACTIVE, CLOSED, DRAFT,OFFERED,REJECTED
 }
