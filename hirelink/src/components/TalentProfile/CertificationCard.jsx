@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDate } from "../../services/Utilities";
 
 const CertificationCard = (props) => {
     // console.log(props);
@@ -15,15 +16,15 @@ const CertificationCard = (props) => {
             />
           </div>
           <div className="text-mine-shaft-300">
-            <h5 className="font-semibold text-mine-shaft-200">{props.name}</h5>
+            <h5 className="font-semibold text-mine-shaft-200">{props.title}</h5>
             <p className="text-sm">{props.issuer}</p>
           </div>
         </div>
         <div className="ml-12">
           <div className="flex flex-col items-end">
-            <p className="text-sm text-mine-shaft-300">{props.issueDate}</p>
+            <p className="text-sm text-mine-shaft-300">Issued {formatDate(props.issueDate)}</p>
             <p className="text-sm text-mine-shaft-300">
-              ID - {props.certificationId}
+              ID - {props.certificateId}
             </p>
           </div>
         </div>

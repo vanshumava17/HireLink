@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDate } from "../../services/Utilities";
 
 const ExperienceCard = (props) => {
   return (
@@ -7,9 +8,10 @@ const ExperienceCard = (props) => {
         <div className="flex items-center gap-4">
           <div className="p-2 bg-mine-shaft-700 rounded-md">
             <img
-              src={`/Icons/${props.company}.png`}
+              src={`/Icons/${props.company}.png` || `/Icons/Company.png`}
               alt="image"
               className="h-7"
+              onError={(e) => (e.target.src = "/Icons/Company.png")}
             />
           </div>
           <div className="text-mine-shaft-300">
@@ -21,7 +23,7 @@ const ExperienceCard = (props) => {
         </div>
         <div className="ml-12">
           <p className="text-sm text-mine-shaft-300">
-            {props.startDate} - {props.endDate}
+            {formatDate(props.startDate)} - {formatDate(props.endDate)}
           </p>
         </div>
       </div>

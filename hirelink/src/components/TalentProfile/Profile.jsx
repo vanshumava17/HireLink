@@ -82,7 +82,7 @@ const Profile = (props) => {
       <Divider size="sm" my="lg" />
       <div className="px-3 flex flex-col gap-5">
         <div className="text-2xl font-semibold mb-5">Experience</div>
-        {item.experience.map((expCard, index) => {
+        {profile?.experiences?.map((expCard, index) => {
           return <ExperienceCard key={index} {...expCard} />;
         })}
       </div>
@@ -90,7 +90,7 @@ const Profile = (props) => {
       <Divider size="sm" my="lg" />
       <div className="px-3 flex flex-col gap-5">
         <div className="text-2xl font-semibold mb-5">Certifications</div>
-        {item.certifications.map((certCard, index) => {
+        {profile?.certifications?.map((certCard, index) => {
           return <CertificationCard key={index} {...certCard} />;
         })}
       </div>

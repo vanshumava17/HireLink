@@ -25,6 +25,8 @@ import {
 } from "../../services/Utilities";
 
 const TalentCard = (props) => {
+  // console.log(props);
+  
   const [opened, { open, close }] = useDisclosure(false);
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
