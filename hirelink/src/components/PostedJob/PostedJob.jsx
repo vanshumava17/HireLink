@@ -74,6 +74,8 @@ const PostedJob = (props) => {
     props.jobList?.filter((job) => job.jobStatus === "ACTIVE") || [];
   const draftJobs =
     props.jobList?.filter((job) => job.jobStatus === "DRAFT") || [];
+  const closedJobs = 
+    props.jobList?.filter((job)=> job.jobStatus === "CLOSED") || [];
 
   return (
     <div className="w-1/5">
@@ -94,6 +96,9 @@ const PostedJob = (props) => {
             </Tabs.Tab>
             <Tabs.Tab value="DRAFT" leftSection={<GiNotebook size={20} />}>
               Draft [{draftJobs.length}]
+            </Tabs.Tab>
+            <Tabs.Tab value="CLOSED" leftSection={<GiNotebook size={20} />}>
+              Closed [{closedJobs.length}]
             </Tabs.Tab>
           </Tabs.List>
 
@@ -117,6 +122,18 @@ const PostedJob = (props) => {
                 ))
               ) : (
                 <p className="text-gray-400 mt-3">No draft jobs found.</p>
+              )}
+            </div>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="CLOSED">
+            <div className="flex flex-col gap-5 mt-3">
+              {closedJobs.length > 0 ? (
+                closedJobs.map((item, index) => (
+                  <PosteJobCard key={index} {...item} />
+                ))
+              ) : (
+                <p className="text-gray-400 mt-3">No closed jobs found.</p>
               )}
             </div>
           </Tabs.Panel>

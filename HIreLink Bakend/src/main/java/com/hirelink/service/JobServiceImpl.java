@@ -16,6 +16,7 @@ import com.hirelink.exception.HireLinkException;
 import com.hirelink.repository.JobRepository;
 import com.hirelink.service.interfaces.JobService;
 import com.hirelink.utility.ApplicationStatus;
+import com.hirelink.utility.JobStatus;
 import com.hirelink.utility.Utilities;
 
 @Service("jobService")
@@ -26,8 +27,16 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public JobDTO postJob(JobDTO jobDTO) throws HireLinkException {
-        jobDTO.setId(Utilities.getNextSequence("jobs"));
-        jobDTO.setPostTime(LocalDateTime.now());
+        if(jobDTO.getId() == 0) {
+            jobDTO.setId(Utilities.getNextSequence("jobs"));
+            jobDTO.setPostTime(LocalDateTime.now());
+        }
+        else {
+            Job job = jobRepository.findById(jobDTO.getId()).orElseThrow(()->new HireLinkException("JOB_NOT_FOUND"));
+            if(job.getJobStatus().equals(JobStatus.DRAFT) || job.getJobStatus().equals(JobStatus.CLOSED)) 
+                jobDTO.setPostTime(LocalDateTime.now());
+        }
+        
         return jobRepository.save(jobDTO.toEntity()).toDTO();
     }
 

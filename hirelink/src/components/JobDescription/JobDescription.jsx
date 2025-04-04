@@ -4,7 +4,7 @@ import { CiBookmark } from "react-icons/ci";
 import { FaBriefcase, FaLocationDot } from "react-icons/fa6";
 import { BsCurrencyRupee } from "react-icons/bs";
 import { MdOutlineEnergySavingsLeaf } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { description, skills } from "../../data/Data";
 import DOMPurify from "dompurify";
 import RecommendedJobs from "./RecommendedJobs";
@@ -13,17 +13,26 @@ import { timeAgo } from "../../services/Utilities";
 import { IoBookmark } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../slices/ProfileSlice";
+import {
+  successNotification,
+  errorNotification,
+} from "../../services/NotificationService";
+import { postJob } from "../../services/JobService";
 
 const JobDescription = (props) => {
   // console.log(props);
   const dispatch = useDispatch();
   const [applied, setApplied] = useState(false);
   const profile = useSelector((state) => state.profile);
-  const user = useSelector((state)=>state.user);
+  const user = useSelector((state) => state.user);
 
+  // console.log(props);
+  // console.log(props.edit);
+
+  const navigate = useNavigate();
 
   const handleSaveJob = () => {
-  let savedJobs = Array.isArray(profile?.savedJobs)
+    let savedJobs = Array.isArray(profile?.savedJobs)
       ? [...profile.savedJobs]
       : [];
 
@@ -38,14 +47,28 @@ const JobDescription = (props) => {
   };
 
   useEffect(() => {
-    if(props.applicants?.filter((applicant)=>applicant.applicantId==user.id).length > 0){
+    if (
+      props.applicants?.filter((applicant) => applicant.applicantId == user.id)
+        .length > 0
+    ) {
       setApplied(true);
-    }
-    else {
-      setApplied(false); 
+    } else {
+      setApplied(false);
     }
   }, [props]);
+
+  const handleClose = () => {
+    postJob({ ...props, jobStatus: "CLOSED" })
+      .then((res) => {
+        successNotification("Success", "Job Closed Successfully");
+      })
+      .catch((err) => {
+        errorNotification("Error", err.response.data.errorMessage);
+      });
+  };
+
   const data = DOMPurify.sanitize(props?.description);
+
   return (
     <>
       <div className="w-3/5">
@@ -63,26 +86,48 @@ const JobDescription = (props) => {
             </p>
           </div>
           <div className="ml-auto flex items-center flex-col gap-2">
-          { props.edit || !applied &&
-              <Link to={`/apply-job/${props.id}`}>
-                <Button color="caribbeanGreen.4" variant="light">
-                  {props.edit ? "Edit" : "Apply"}
-                </Button>
-              </Link>
-            }
-            { !props.edit && applied &&
+            {/* {props.edit ||
+              (!applied && (
+                <Link
+                  to={
+                    props.edit
+                      ? `/post-job/${props.id}`
+                      : `/apply-job/${props.id}`
+                  }
+                >
+                  <Button color="caribbeanGreen.4" variant="light">
+                    {props.closed ? "Reopen" : props.edit ? "Edit" : "Apply"}
+                  </Button>
+                </Link>
+              ))}
+            {!props.edit && applied && (
               <Button color="green.8" variant="light">
                 Applied
               </Button>
-            }
-            { props.edit && applied &&
+            )} */}
+            {/* { props.edit && applied &&
               <Button color="caribbeanGreen.4" variant="outline">
                 Edit
               </Button>
-            }
+            } */}
+
+            {props.edit && (
+              <Link
+                to={
+                  props.edit
+                    ? `/post-job/${props.id}`
+                    : `/apply-job/${props.id}`
+                }
+              >
+                <Button color="caribbeanGreen.4" variant="outline">
+                  Edit
+                </Button>
+              </Link>
+            )}
             {props.edit ? (
-              <Button color="red.5" variant="outline">
-                <FaTrash stroke={2} />
+              <Button color="red.5" variant="outline" onClick={handleClose}>
+                {/* <FaTrash stroke={2} /> */}
+                Close
               </Button>
             ) : profile?.savedJobs?.includes(props.id) ? (
               <IoBookmark

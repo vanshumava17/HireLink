@@ -5,9 +5,9 @@ const NavLinks = () => {
   const links = [
     { name: "Find Jobs", url: "/find-jobs" },
     { name: "Find Talent", url: "/find-talent" },
-    { name: "Post Jobs", url: "/post-job" },
+    { name: "Post Jobs", url: "/post-job/0" },
     // { name: "About Us", url: "/about" },
-    { name: "Posted Job", url: "/company-posted-job/1" },
+    { name: "Posted Job", url: "/company-posted-job/0" },
     { name: "Job History", url: "/job-history" },
     // { name: "Sign Up", url: "/signup" },
   ];

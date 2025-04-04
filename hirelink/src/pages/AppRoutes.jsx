@@ -28,7 +28,7 @@ function AppRoutes() {
           <Route path="/find-jobs" element={<FindJobs />} />
           <Route path="/find-talent" element={<FindTalent />} />
           <Route path="/talent-profile/:id" element={<TalentProfile />} />
-          <Route path="/post-job" element={<PostJobPage />} />
+          <Route path="/post-job/:id" element={<PostJobPage />} />
           <Route path="/jobs/:id" element={<JobDescriptionPage />} />
           <Route path="/apply-job/:id" element={<ApplyJobPage />} />
           <Route path="/company/:name" element={<CompanyPage />} />
