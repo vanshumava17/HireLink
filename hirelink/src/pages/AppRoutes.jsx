@@ -1,0 +1,54 @@
+import React from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { useSelector } from "react-redux";
+import Home from "./Home";
+import FindJobs from "./FindJob";
+import FindTalent from "./FindTalent";
+import TalentProfile from "./TalentProfile";
+import PostJobPage from "./PostJobPage";
+import JobDescriptionPage from "./JobDescriptionPage";
+import ApplyJobPage from "./ApplyJobPage";
+import CompanyPage from "./CompanyPage";
+import PostedJobPage from "./PostedJobPage";
+import JobHistoryPage from "./JobHistoryPage";
+import SignUpPage from "./SignUpPage";
+import ProfilePage from "./ProfilePage";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
+
+function AppRoutes() {
+  const user = useSelector((state) => state.user);
+  return (
+    <BrowserRouter>
+      <div className="relative">
+        <Header />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/find-jobs" element={<FindJobs />} />
+          <Route path="/find-talent" element={<FindTalent />} />
+          <Route path="/talent-profile/:id" element={<TalentProfile />} />
+          <Route path="/post-job/:id" element={<PostJobPage />} />
+          <Route path="/jobs/:id" element={<JobDescriptionPage />} />
+          <Route path="/apply-job/:id" element={<ApplyJobPage />} />
+          <Route path="/company/:name" element={<CompanyPage />} />
+          <Route path="/company-posted-job/:id" element={<PostedJobPage />} />
+          <Route path="/job-history" element={<JobHistoryPage />} />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to={"/"} /> : <SignUpPage />}
+          />
+          <Route
+            path="/login"
+            element={user ? <Navigate to={"/"} /> : <SignUpPage />}
+          />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="*"  element={<Home/>} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default AppRoutes;

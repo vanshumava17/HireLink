@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HireLinkApplication<HireLink>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.hirelink.HireLinkApplication",
+            "projectName": "HireLink",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
