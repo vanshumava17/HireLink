@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React from "react";
-=======
 import React, { useEffect } from "react";
->>>>>>> master
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
@@ -18,13 +14,10 @@ import { IoMdColorFilter } from "react-icons/io";
 const content = "";
 
 const TextEditor = (props) => {
-<<<<<<< HEAD
-=======
   useEffect(() => {
     editor?.commands.setContent(props.data);
   }, [props.data]);
 
->>>>>>> master
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -37,17 +30,10 @@ const TextEditor = (props) => {
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-<<<<<<< HEAD
-    content:props.form.getValues().description,
-    onUpdate({editor}) {
-      props.form.setFieldValue('description', editor.getHTML())
-    }
-=======
     content: props.form.getValues().description,
     onUpdate({ editor }) {
       props.form.setFieldValue("description", editor.getHTML());
     },
->>>>>>> master
   });
 
   return (

@@ -15,11 +15,7 @@ const SelectInput = (props) => {
     setData(props.options);
     setValue(props.form.getInputProps(props.name).value)
     setSearch(props.form.getInputProps(props.name).value)
-<<<<<<< HEAD
-  }, []);
-=======
   }, [props]);
->>>>>>> master
 
   const exactOptionMatch = data.some((item) => item === search);
   const filteredOptions = exactOptionMatch

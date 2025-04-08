@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React from "react";
-=======
 import React, { useEffect, useState } from "react";
->>>>>>> master
 import SelectInput from "./SelectInput";
 import { content } from "../../data/PostJob";
 import { fields } from "../../data/Data"; // need to change to PostJob
@@ -16,18 +12,6 @@ import {
 } from "@mantine/core";
 import TextEditor from "./TextEditor";
 import { isNotEmpty, useForm } from "@mantine/form";
-<<<<<<< HEAD
-import { postJob } from "../../services/JobService";
-import { successNotification , errorNotification } from "../../services/NotificationService";
-import { useNavigate } from "react-router";
-import { useSelector } from "react-redux"
-
-
-const PostJob = () => {
-  const select = fields;
-  const navigate = useNavigate();
-  const user = useSelector((state)=>state.user);
-=======
 import { getJob, postJob } from "../../services/JobService";
 import {
   successNotification,
@@ -59,7 +43,6 @@ const PostJob = () => {
       setEditorData("");
     }
   }, [id]);
->>>>>>> master
 
   const form = useForm({
     mode: "controlled",
@@ -88,39 +71,6 @@ const PostJob = () => {
     },
   });
 
-<<<<<<< HEAD
-  const handlePost = ()=>{
-    form.validate();
-    if(!form.isValid()) return ;
-    postJob({...form.getValues(),postedBy:user.id, jobStatus:"ACTIVE"})
-    .then((res)=>{
-        successNotification("Success", "Job Posted Successfully");  
-        navigate(`/company-posted-job/${res.id}`);
-    })
-    .catch((err)=>{
-      console.log(err);
-      // errorNotification("Error" ,err.response.data.errorMessage);
-      errorNotification("Error" ,"something went wrong");
-
-    })
-  }
-
-  const handleDraft = ()=>{
-form.validate();
-    if(!form.isValid()) return ;
-    postJob({...form.getValues(),postedBy:user.id, jobStatus:"DRAFT"})
-    .then((res)=>{
-        successNotification("Success", "Job Drafted Successfully");  
-        navigate(`/company-posted-job/${res.id}`);
-    })
-    .catch((err)=>{
-      console.log(err);
-      // errorNotification("Error" ,err.response.data.errorMessage);
-      errorNotification("Error" ,"something went wrong");
-
-    })
-  }
-=======
   const handlePost = () => {
     form.validate();
     if (!form.isValid()) return;
@@ -150,7 +100,6 @@ form.validate();
         errorNotification("Error", "something went wrong");
       });
   };
->>>>>>> master
 
   return (
     <div className="w-4/5 mx-auto py-5">
@@ -205,30 +154,21 @@ form.validate();
         />
 
         <div className="[&_button[data-active='true']]:!text-caribbean-green-400 [&_button[data-active='true']]:!bg-caribbean-green400/20">
-<<<<<<< HEAD
-          <h4 className="font-semibold">Job Description<span className="text-red-500">*</span></h4>
-          <TextEditor form={form}/>
-=======
           <h4 className="font-semibold">
             Job Description<span className="text-red-500">*</span>
           </h4>
           <TextEditor form={form} data={editorData} />
->>>>>>> master
         </div>
 
         <div className="flex gap-6">
           <Button variant="light" color="caribbeanGreen.4" onClick={handlePost}>
             Publish Job
           </Button>
-<<<<<<< HEAD
-          <Button variant="outline" color="caribbeanGreen.4" onClick={handleDraft}>
-=======
           <Button
             variant="outline"
             color="caribbeanGreen.4"
             onClick={handleDraft}
           >
->>>>>>> master
             Save as Draft
           </Button>
         </div>

@@ -26,11 +26,6 @@ import {
 
 const TalentCard = (props) => {
   // console.log(props);
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> master
   const [opened, { open, close }] = useDisclosure(false);
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
@@ -104,11 +99,8 @@ const TalentCard = (props) => {
       });
   };
 
-<<<<<<< HEAD
-=======
   // console.log(props);
 
->>>>>>> master
   return (
     <div className="bg-mine-shaft-900 p-4 w-108 rounded-lg hover:shadow-[0_0_5px_1px_yellow] !shadow-caribbean-green-400 cursor-pointer min-h-56">
       <div className="flex items-center gap-2">
@@ -167,13 +159,9 @@ const TalentCard = (props) => {
         </>
       ) : (
         <div className="flex justify-between items-center my-2">
-<<<<<<< HEAD
-          <p className="font-bold">₹ 23 LPA</p>
-=======
           <p className="font-bold">
             Experience: {props.totalExp ? props.totalExp + " Years" : "Fresher"}
           </p>
->>>>>>> master
           <div className="flex items-center gap-1 font-semibold text-mine-shaft-400 text-sm">
             <IoLocationSharp className="h-4 w-4 font-bold" stroke={2} />
             {profile.location}

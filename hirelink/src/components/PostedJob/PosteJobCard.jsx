@@ -34,10 +34,6 @@ const PosteJobCard = (props) => {
   const { id } = useParams();
   const isActive = props.id.toString() === id;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
   return (
     <Link
       to={`/company-posted-job/${props.id}`}
@@ -49,9 +45,6 @@ const PosteJobCard = (props) => {
     >
       <p className="font-semibold">{props.jobTitle}</p>
       <p className="font-medium">{props.location}</p>
-<<<<<<< HEAD
-      <p>{timeAgo(props.postTime)}</p>
-=======
       <p>
         {props.jobStatus === "DRAFT"
           ? "Drafted"
@@ -60,7 +53,6 @@ const PosteJobCard = (props) => {
           : "Posted"}{" "}
         {timeAgo(props.postTime)}
       </p>
->>>>>>> master
     </Link>
   );
 };

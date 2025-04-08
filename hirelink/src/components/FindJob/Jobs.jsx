@@ -3,17 +3,6 @@ import Sort from "./Sort";
 import JobCard from "./JobCard";
 // import { jobsList } from "../../data/Data";
 import { getAllJobs } from "../../services/JobService";
-<<<<<<< HEAD
-
-const Jobs = () => {
-  const [jobList, setJobList] = useState([]);
-
-  useEffect(() => {
-    getAllJobs()
-      .then((res) => {
-        // console.log(res);
-        setJobList(res);
-=======
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../../slices/FilterSlice";
 import { resetSort } from "../../slices/SortSlice";
@@ -34,7 +23,6 @@ const Jobs = () => {
       .then((res) => {
         // console.log(res);
         setJobList(res.filter((job) => job.jobStatus === "ACTIVE"));
->>>>>>> master
       })
       .catch((err) => {
         console.log(err.response);
@@ -42,18 +30,6 @@ const Jobs = () => {
   }, []);
   // console.log(jobList);
 
-<<<<<<< HEAD
-  return (
-    <div className="px-5 mt-10">
-      <div className="flex justify-between">
-        <h4 className="font-bold text-2xl">Recommended Jobs</h4>
-        <Sort />
-      </div>
-      <div className="flex flex-wrap items-center gap-9 mx-10 py-10">
-        {jobList.map((item, index) => {
-          return <JobCard key={index} index={index} {...item} />;
-        })}
-=======
   useEffect(() => {
     let filterJob = jobList;
 
@@ -148,7 +124,6 @@ const Jobs = () => {
           <p className="text-center text-xl font-semibold">No Jobs</p>
         )}
 
->>>>>>> master
         {/* <JobCard {...jobList} />; */}
       </div>
     </div>

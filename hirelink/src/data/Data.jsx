@@ -467,11 +467,7 @@ export const searchFields = [
     title: "Location",
     icon: <CiLocationOn />,
     options: [
-<<<<<<< HEAD
-      "Bengaluru",
-=======
       "Banglore",
->>>>>>> master
       "Bhopal",
       "Delhi",
       "Indore",

@@ -86,19 +86,11 @@ const JobDescription = (props) => {
             </p>
           </div>
           <div className="ml-auto flex items-center flex-col gap-2">
-<<<<<<< HEAD
-            {/* {props.edit ||
-              (!applied && (
-                <Link
-                  to={
-                    props.edit
-=======
             {props.edit ||
               (!applied && (
                 <Link
                   to={
                     props.closed
->>>>>>> master
                       ? `/post-job/${props.id}`
                       : `/apply-job/${props.id}`
                   }
@@ -108,19 +100,11 @@ const JobDescription = (props) => {
                   </Button>
                 </Link>
               ))}
-<<<<<<< HEAD
-=======
-
->>>>>>> master
             {!props.edit && applied && (
               <Button color="green.8" variant="light">
                 Applied
               </Button>
-<<<<<<< HEAD
-            )} */}
-=======
             )}
->>>>>>> master
             {/* { props.edit && applied &&
               <Button color="caribbeanGreen.4" variant="outline">
                 Edit

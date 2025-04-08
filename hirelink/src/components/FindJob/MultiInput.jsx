@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-import {
-  Checkbox,
-  CheckIcon,
-=======
 // import React, { useEffect, useState } from "react";
 // import {
 //   Checkbox,
@@ -161,7 +155,6 @@ import {
 import React, { useEffect, useState } from "react";
 import {
   Checkbox,
->>>>>>> master
   Combobox,
   Group,
   Input,
@@ -170,28 +163,18 @@ import {
   ScrollArea,
   useCombobox,
 } from "@mantine/core";
-<<<<<<< HEAD
-import { FaSearch } from "react-icons/fa";
-=======
 import { useDispatch } from "react-redux";
 import { updateFilter } from "../../slices/FilterSlice";
->>>>>>> master
 
 const MultiInput = (props) => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
   const [value, setValue] = useState([]);
 
-<<<<<<< HEAD
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    // onDropdownOpen: () => combobox.updateSelectedOptionIndex("active"),
-=======
   const dispatch = useDispatch();
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
->>>>>>> master
     scrollBehavior: "smooth",
   });
 
@@ -199,13 +182,9 @@ const MultiInput = (props) => {
     setData(props.options);
   }, []);
 
-<<<<<<< HEAD
-  const exactOptionMatch = data.some((item) => item === search);
-=======
   const exactOptionMatch = data.some(
     (item) => item.toLowerCase() === search.trim().toLowerCase()
   );
->>>>>>> master
 
   const handleValueSelect = (val) => {
     setSearch("");
@@ -213,19 +192,6 @@ const MultiInput = (props) => {
     if (val === "$create") {
       setData((current) => [...current, search]);
       setValue((current) => [...current, search]);
-<<<<<<< HEAD
-    } else {
-      setValue((current) =>
-        current.includes(val)
-          ? current.filter((v) => v !== val)
-          : [...current, val]
-      );
-    }
-  };
-
-  const handleValueRemove = (val) =>
-    setValue((current) => current.filter((v) => v !== val));
-=======
       dispatch(updateFilter({ [props.title]: [...value, search] }));
     } else {
       const newValue = value.includes(val)
@@ -242,7 +208,6 @@ const MultiInput = (props) => {
     setValue(newValue);
     dispatch(updateFilter({ [props.title]: newValue }));
   };
->>>>>>> master
 
   const values = value.slice(0, 1).map((item) => (
     <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
@@ -250,18 +215,12 @@ const MultiInput = (props) => {
     </Pill>
   ));
 
-<<<<<<< HEAD
-  const options = data
-    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
-    .map((item) => (
-=======
   const filteredOptions = data.filter((item) =>
     item.toLowerCase().includes(search.trim().toLowerCase())
   );
 
   const options = [
     ...filteredOptions.map((item) => (
->>>>>>> master
       <Combobox.Option value={item} key={item} active={value.includes(item)}>
         <Group gap="sm">
           <Checkbox
@@ -276,9 +235,6 @@ const MultiInput = (props) => {
           <span>{item}</span>
         </Group>
       </Combobox.Option>
-<<<<<<< HEAD
-    ));
-=======
     )),
 
     // Add "+ Create" option if no exact match
@@ -288,7 +244,6 @@ const MultiInput = (props) => {
       </Combobox.Option>
     ),
   ];
->>>>>>> master
 
   return (
     <Combobox
