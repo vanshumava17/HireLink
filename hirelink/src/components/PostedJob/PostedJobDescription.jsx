@@ -23,6 +23,7 @@ const PostedJobDescription = (props) => {
   const [arr, setArr] = useState([]);
   const handleTabChange = (value) => {
     setTab(value);
+<<<<<<< HEAD
     if(value == "applicants") 
       setArr(props.applicants?.filter((x)=> x.applicationStatus=="APPLIED"));
     else if(value == "invited")
@@ -36,6 +37,25 @@ const PostedJobDescription = (props) => {
   useEffect(()=>{
     handleTabChange("overview")
   },[props])
+=======
+    if (value == "applicants")
+      setArr(props.applicants?.filter((x) => x.applicationStatus == "APPLIED"));
+    else if (value == "invited")
+      setArr(
+        props.applicants?.filter((x) => x.applicationStatus == "INTERVIEWING")
+      );
+    else if (value == "offered")
+      setArr(props.applicants?.filter((x) => x.applicationStatus == "OFFERED"));
+    else if (value == "rejected")
+      setArr(
+        props.applicants?.filter((x) => x.applicationStatus == "REJECTED")
+      );
+  };
+
+  useEffect(() => {
+    handleTabChange("overview");
+  }, [props]);
+>>>>>>> master
 
   // console.log(applied);
 
@@ -45,7 +65,11 @@ const PostedJobDescription = (props) => {
         <>
           <h4 className="text-2xl font-semibold mb-3">
             {props.jobTitle}
+<<<<<<< HEAD
             <Badge variant="light" color="caribbeanGreen.4">
+=======
+            <Badge variant="light" color="caribbeanGreen.4" className="ml-3">
+>>>>>>> master
               {props.jobStatus}
             </Badge>
           </h4>
@@ -54,7 +78,17 @@ const PostedJobDescription = (props) => {
           </div>
 
           <div>
+<<<<<<< HEAD
             <Tabs variant="pills" radius="md" valuee={tab} onChange={handleTabChange} defaultValue={"overview"}>
+=======
+            <Tabs
+              variant="pills"
+              radius="md"
+              value={tab}
+              onChange={handleTabChange}
+              defaultValue={"overview"}
+            >
+>>>>>>> master
               <Tabs.List className="[&_button]:!text-lg font-semibold">
                 <Tabs.Tab
                   value="overview"
@@ -89,42 +123,90 @@ const PostedJobDescription = (props) => {
               </Tabs.List>
 
               <Tabs.Panel value="overview" className="[&>div]:w-full mt-5">
+<<<<<<< HEAD
                 {props.jobStatus=="CLOSED"?
                 <JobDescription {...props} closed /> :<JobDescription {...props} edit/>}
+=======
+                {props.jobStatus == "CLOSED" ? (
+                  <JobDescription {...props} closed />
+                ) : (
+                  <JobDescription {...props} edit />
+                )}
+>>>>>>> master
               </Tabs.Panel>
 
               <Tabs.Panel value="applicants">
                 <div className="flex flex-wrap items-center gap-5 py-10 justify-center">
+<<<<<<< HEAD
                   {arr.length?arr.map((item, index) => {
                     return <TalentCard key={index} {...item} posted />;
                   }): <p className="font-semibold">No applicants</p>}
+=======
+                  {arr && arr.length ? (
+                    arr.map((item, index) => {
+                      return <TalentCard key={index} {...item} posted />;
+                    })
+                  ) : (
+                    <p className="font-semibold">No applicants</p>
+                  )}
+>>>>>>> master
                 </div>
               </Tabs.Panel>
 
               <Tabs.Panel value="invited">
                 <div className="flex flex-wrap items-center gap-5 py-10 justify-center">
+<<<<<<< HEAD
                   {
                     arr.length?arr.map((item, index) => (
                       <TalentCard key={index} {...item} invited />
                     )):<p className="font-semibold">Not Invited</p>}
+=======
+                  {arr && arr.length ? (
+                    arr.map((item, index) => (
+                      <TalentCard key={index} {...item} invited />
+                    ))
+                  ) : (
+                    <p className="font-semibold">Not Invited</p>
+                  )}
+>>>>>>> master
                 </div>
               </Tabs.Panel>
 
               <Tabs.Panel value="offered">
                 <div className="flex flex-wrap items-center gap-5 py-10 justify-center">
+<<<<<<< HEAD
                   {
                     arr.length?arr.map((item, index) => {
                       return <TalentCard key={index} {...item} offerd />;
                     }):<p className="font-semibold">Not Offered </p>}
+=======
+                  {arr && arr.length ? (
+                    arr.map((item, index) => {
+                      return <TalentCard key={index} {...item} offered />;
+                    })
+                  ) : (
+                    <p className="font-semibold">Not Offered </p>
+                  )}
+>>>>>>> master
                 </div>
               </Tabs.Panel>
 
               <Tabs.Panel value="rejected">
                 <div className="flex flex-wrap items-center gap-5 py-10 justify-center">
+<<<<<<< HEAD
                   {
                     arr.length?arr.map((item, index) => {
                       return <TalentCard key={index} {...item} rejected />;
                     }):<p className="font-semibold">No Rejected Candidates</p>}
+=======
+                  {arr && arr.length ? (
+                    arr.map((item, index) => {
+                      return <TalentCard key={index} {...item} rejected />;
+                    })
+                  ) : (
+                    <p className="font-semibold">No Rejected Candidates</p>
+                  )}
+>>>>>>> master
                 </div>
               </Tabs.Panel>
             </Tabs>

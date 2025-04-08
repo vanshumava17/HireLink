@@ -8,6 +8,7 @@ import ProfileMenu from "./ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../services/ProfileService";
 import { setProfile } from "../../slices/ProfileSlice";
+<<<<<<< HEAD
 
 const Header = () => {
   const location = useLocation();
@@ -16,6 +17,17 @@ const Header = () => {
 
   // console.log(user);
   
+=======
+import NotificationMenu from "./NotificationMenu";
+
+const Header = () => {
+  const location = useLocation();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  // console.log(user);
+
+>>>>>>> master
   // useEffect(() => {
   //     getProfile(user.id)
   //       .then((data) => {
@@ -29,7 +41,12 @@ const Header = () => {
   //   }, []);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (user) {  // Only fetch profile if user is not null
+=======
+    if (user) {
+      // Only fetch profile if user is not null
+>>>>>>> master
       getProfile(user.id)
         .then((data) => {
           dispatch(setProfile(data));
@@ -39,7 +56,10 @@ const Header = () => {
         });
     }
   }, [user]); // Depend on user, so it runs when user state changes
+<<<<<<< HEAD
   
+=======
+>>>>>>> master
 
   return (
     location.pathname != "/signup" &&
@@ -56,16 +76,32 @@ const Header = () => {
         </Link>
         <NavLinks />
         <div className="flex items-center gap-6 text-xl">
+<<<<<<< HEAD
           {user?<ProfileMenu />:<Link to="/login" ><Button variant="outline" color="caribbeanGreen.4">Login</Button></Link>}
+=======
+          {user ? (
+            <ProfileMenu />
+          ) : (
+            <Link to="/login">
+              <Button variant="outline" color="caribbeanGreen.4">
+                Login
+              </Button>
+            </Link>
+          )}
+>>>>>>> master
           {/* <div className="bg-mine-shaft-900 p-1.5 rounded-full hover:bg-mine-shaft-700 cursor-pointer">
             <IoSettingsOutline />
           </div> */}
 
+<<<<<<< HEAD
           <div className="bg-mine-shaft-900 p-1.5 rounded-full hover:bg-mine-shaft-700 cursor-pointer">
             <Indicator color="caribbeanGreen.4" processing>
               <IoNotifications />
             </Indicator>
           </div>
+=======
+          <NotificationMenu />
+>>>>>>> master
         </div>
       </div>
     )

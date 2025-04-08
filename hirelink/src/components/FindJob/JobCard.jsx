@@ -13,18 +13,35 @@ const JobCard = (props) => {
   const profile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const handleSaveJob = () => {
+<<<<<<< HEAD
     let savedJobs = Array.isArray(profile?.savedJobs) ? [...profile.savedJobs] : [];
   
+=======
+    let savedJobs = Array.isArray(profile?.savedJobs)
+      ? [...profile.savedJobs]
+      : [];
+
+>>>>>>> master
     if (savedJobs.includes(props.id)) {
       savedJobs = savedJobs.filter((id) => id !== props.id);
     } else {
       savedJobs.push(props.id);
     }
+<<<<<<< HEAD
   
     let updatedProfile = { ...profile, savedJobs: savedJobs };
     dispatch(changeProfile(updatedProfile));
   };
   
+=======
+
+    let updatedProfile = { ...profile, savedJobs: savedJobs };
+    dispatch(changeProfile(updatedProfile));
+  };
+
+  // console.log(props);
+
+>>>>>>> master
   return (
     <div className="bg-mine-shaft-900 p-4 w-80 rounded-lg hover:shadow-[0_0_5px_1px_caribbeanGreen.3] !shadow-caribbean-green-400  ">
       <div className="flex items-center gap-2">
@@ -48,7 +65,11 @@ const JobCard = (props) => {
             &nbsp; &#x2022;
             {props?.applicants != null
               ? ` ${props.applicants.length} Applicants`
+<<<<<<< HEAD
               : "No Applicants"}
+=======
+              : " No Applicants"}
+>>>>>>> master
           </div>
         </div>
         <div className="ml-auto">
@@ -80,7 +101,13 @@ const JobCard = (props) => {
 
       <div className="my-2">
         <Text lineClamp={3} className="!text-sm text-justify">
+<<<<<<< HEAD
           {props?.description}
+=======
+          {props?.description && (
+            <div dangerouslySetInnerHTML={{ __html: props.description }} />
+          )}
+>>>>>>> master
         </Text>
       </div>
 
@@ -93,7 +120,16 @@ const JobCard = (props) => {
         </div>
       </div>
       <Link to={`/jobs/${props.id}`}>
+<<<<<<< HEAD
         <Button className="hover:cursor-pointer min-h-5" fullWidth variant="outline" color="caribbeanGreen.4">
+=======
+        <Button
+          className="hover:cursor-pointer min-h-5"
+          fullWidth
+          variant="outline"
+          color="caribbeanGreen.4"
+        >
+>>>>>>> master
           View
         </Button>
       </Link>

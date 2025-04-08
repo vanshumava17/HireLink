@@ -6,6 +6,7 @@ import ExperienceCard from "./ExperienceCard";
 import CertificationCard from "./CertificationCard";
 import { useParams } from "react-router";
 import { getProfile } from "../../services/ProfileService";
+<<<<<<< HEAD
 
 const Profile = (props) => {
 
@@ -21,6 +22,25 @@ const Profile = (props) => {
       console.log(err);
     })
   },[id])
+=======
+import { SiExpensify } from "react-icons/si";
+
+const Profile = (props) => {
+  const item = props[14]; // this line need to be removed
+
+  const { id } = useParams();
+  const [profile, setProfile] = useState({});
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getProfile(id)
+      .then((res) => {
+        setProfile(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+>>>>>>> master
 
   return (
     <div className="w-2/3">
@@ -31,7 +51,15 @@ const Profile = (props) => {
           className="rounded-t-2xl h-44 w-full"
         />
         <img
+<<<<<<< HEAD
           src={profile.picture?`data:image/jpeg;base64,${profile.picture}`:"avatar.webp"}
+=======
+          src={
+            profile.picture
+              ? `data:image/jpeg;base64,${profile.picture}`
+              : "avatar.webp"
+          }
+>>>>>>> master
           alt=""
           className="rounded-full h-40 w-40 -bottom-1/5 absolute left-3 border-mine-shaft-950 border-8"
         />
@@ -52,13 +80,29 @@ const Profile = (props) => {
           <IoLocationSharp className="h-5 w-5 font-bold" stroke={2} />
           {profile?.location}
         </div>
+<<<<<<< HEAD
+=======
+
+        <div className="flex items-center gap-1 font-semibold text-mine-shaft-400 text-sm mt-2">
+          <SiExpensify className="h-5 w-5 font-bold" stroke={2} />
+          <p className="text-white text-md">
+            {profile?.totalExp ? `${profile.totalExp} Years` : "Fresher"}
+          </p>
+        </div>
+>>>>>>> master
       </div>
 
       <Divider size="sm" my="lg" />
 
       <div className="px-3">
         <div className="text-2xl font-semibold mb-3">About</div>
+<<<<<<< HEAD
         <p className="text-md text-mine-shaft-200 text-justify">{profile?.about}</p>
+=======
+        <p className="text-md text-mine-shaft-200 text-justify">
+          {profile?.about}
+        </p>
+>>>>>>> master
       </div>
 
       <Divider size="sm" my="lg" />
